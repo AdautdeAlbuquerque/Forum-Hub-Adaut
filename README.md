@@ -1,38 +1,64 @@
-# 📚 Forum Hub API
+# 📚 **Forum Hub API**
 
-## 📖 **Descrição**
+Bem-vindo ao **Forum Hub API**, o terceiro desafio da série **Challenge Back End** da Alura! Este projeto consiste na construção de uma API REST para gerenciamento de tópicos de discussão, utilizando as melhores práticas de desenvolvimento backend com **Spring Boot**.
 
-O **Forum Hub API** é uma aplicação REST desenvolvida com **Spring Boot** que permite o gerenciamento de tópicos de discussão. A API inclui funcionalidades de autenticação com **JWT** (JSON Web Token), segurança via **Spring Security** e persistência de dados utilizando o banco de dados **PostgreSQL**.
+## ✨ **História**
 
-A aplicação foi criada para oferecer um CRUD completo de tópicos, com endpoints protegidos por autenticação e documentação automatizada utilizando **Swagger UI**.
+Um fórum é um espaço de aprendizado e colaboração, onde participantes podem tirar dúvidas, compartilhar ideias e buscar soluções. Neste desafio, o objetivo é recriar a lógica por trás de um fórum, como o utilizado na Alura, focando no backend e simulando funcionalidades essenciais.
+
+Nosso desafio é implementar uma API que permita:
+
+- **Criar** novos tópicos;
+- **Listar** todos os tópicos;
+- **Buscar** tópicos específicos por ID;
+- **Atualizar** tópicos existentes;
+- **Excluir** tópicos.
+
+Essas operações, conhecidas como **CRUD** (Create, Read, Update, Delete), são implementadas com uma abordagem REST, com autenticação e autorização seguras, e persistência de dados em um banco relacional.
+
+---
+
+## 🚀 **Funcionalidades**
+
+A API oferece:
+
+1. **CRUD de Tópicos**: Operações completas de criação, leitura, atualização e exclusão.
+2. **Autenticação JWT**: Apenas usuários autenticados podem acessar os endpoints.
+3. **Validações**: As entradas são validadas conforme as regras de negócio.
+4. **Segurança**: As senhas são armazenadas de forma segura utilizando **BCrypt**.
+5. **Persistência**: Uso de banco de dados relacional **PostgreSQL** com mapeamento via **JPA**.
+6. **Documentação Interativa**: Disponível via **Swagger UI**.
 
 ---
 
 ## 🛠️ **Tecnologias Utilizadas**
 
-A API foi construída utilizando as seguintes tecnologias:
+| Tecnologia            | Descrição                                              |
+|-----------------------|--------------------------------------------------------|
+| **Java**             | Linguagem de programação principal usada no projeto.    |
+| **Spring Boot**       | Framework para desenvolvimento rápido de APIs REST.    |
+| **Spring Security**   | Biblioteca para autenticação e autorização seguras.    |
+| **JWT (JSON Web Token)** | Método para autenticação e proteção dos endpoints.      |
+| **PostgreSQL**        | Banco de dados relacional utilizado para persistência.  |
+| **Spring Data JPA**   | Abstração para simplificar o acesso ao banco de dados.  |
+| **Swagger UI**        | Ferramenta para documentação interativa da API.         |
+| **BCrypt**            | Algoritmo para criptografia segura de senhas.           |
 
-| Tecnologia         | Descrição                                            |
-|--------------------|----------------------------------------------------|
-| **Spring Boot**    | Framework para criar aplicações Java de forma rápida e produtiva. |
-| **Spring Security**| Biblioteca de segurança que adiciona autenticação e autorização. |
-| **JWT (JSON Web Token)** | Método de autenticação para proteger os endpoints da API. |
-| **PostgreSQL**     | Banco de dados relacional utilizado para persistência dos dados. |
-| **Spring Data JPA**| Abstração para facilitar o acesso ao banco de dados. |
-| **Swagger UI**     | Ferramenta de documentação interativa para APIs REST. |
 
 ---
 
-## ⚙️ **Configuração Inicial**
+## ⚙️ **Como Configurar**
 
-1️⃣ **Clone o repositório:**
+### 1️⃣ **Clonar o Repositório**
 
 ```bash
 git clone https://github.com/seu-usuario/forum-hub.git
 cd forum-hub
 ```
 
-2️⃣ **Configure o banco de dados no arquivo `application.properties`** localizado em `src/main/resources/`:
+### 2️⃣ **Configurar o Banco de Dados**
+
+Edite o arquivo `application.properties` em `src/main/resources`:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/forum_hub
@@ -42,95 +68,121 @@ spring.datasource.password=sua_senha
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-3️⃣ **Execute a aplicação:**
+### 3️⃣ **Executar a Aplicação**
+
+Certifique-se de ter o **Maven** configurado e execute o comando:
 
 ```bash
 mvn spring-boot:run
 ```
 
-A aplicação estará disponível em `http://localhost:8080`.
+A aplicação estará disponível em: [http://localhost:8080](http://localhost:8080).
 
 ---
 
-## 🔐 **Segurança da API**
+## 🔐 **Autenticação**
 
-Todos os endpoints, exceto `/login`, são protegidos por **JWT** e requerem um token de autenticação válido. As senhas dos usuários são armazenadas de forma segura utilizando o algoritmo **BCrypt**.
+### **Como Obter um Token JWT**
 
----
+1. Faça uma requisição **POST** para o endpoint `/login` com as credenciais de um usuário válido (É importante cadastrar o usuário e a senha já criptografada:
 
-## 🔑 **Como Autenticar na API**
+   **Payload de Exemplo:**
 
-Para obter um **token JWT**, faça uma requisição POST para o endpoint `/login` com as credenciais de um usuário válido:
+   ```json
+   {
+     "login": "admin",
+     "senha": "123456"
+   }
+   ```
 
-### **POST** `/login`
+   ## 🔐 **Importante: Cadastro de Usuários para Autenticação**
 
-Exemplo de payload da requisição:
+Para testar a API e obter um token JWT válido, é necessário que o usuário esteja previamente cadastrado no banco de dados com a senha criptografada. A aplicação utiliza o algoritmo **BCrypt** para proteger as senhas.
 
-```json
-{
-  "login": "admin",
-  "senha": "123456"
-}
-```
+### **Como Cadastrar o Usuário**
 
-Se as credenciais forem válidas, a API retornará um token JWT:
+1. Insira manualmente o usuário no banco de dados, garantindo que a senha seja armazenada de forma criptografada.
 
-```json
-{
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGF1dCIsImlzcyI6IkFQSSBGb3J1bSBIdWIiLCJleHAiOjE3MzY3NT..."
-}
-```
+2. Utilize um gerador de hash **BCrypt** para gerar a senha criptografada. Você pode usar ferramentas online, como [BCrypt Generator](https://bcrypt-generator.com/), ou bibliotecas em sua linguagem de preferência.
 
-Esse token deve ser enviado no cabeçalho das próximas requisições, conforme o exemplo abaixo:
+   **Exemplo de Senha Criptografada:**
+   - Senha: `123456`
+   - Hash gerado com BCrypt: `$2a$10$WzB5TvhdUqmvZ2Ns1OgU..V0H6mF...`
 
-```
-Authorization: Bearer <seu_token>
-```
+3. Insira os dados no banco de dados manualmente ou via script SQL:
 
----
+   ```
+INSERT INTO usuarios (login, senha, role) 
+VALUES ('admin', '$2a$10$WzB5TvhdUqmvZ2Ns1OgU..V0H6mF...', 'ROLE_USER');
+   ```
 
-## 📄 **Documentação com Swagger UI**
+   - **`login`**: Nome de usuário (e-mail ou identificador único).
+   - **`senha`**: Hash da senha gerado com **BCrypt**.
+   - **`role`**: Papel ou permissão (exemplo: `ROLE_USER`).
 
-A documentação interativa da API está disponível em:
-
-👉 **Swagger UI:**  
-[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+4. Após isso, use as credenciais para realizar a autenticação via endpoint `/login`.
 
 ---
 
-## 🚀 **Endpoints Disponíveis**
+**Observação:** Durante o desenvolvimento ou testes, você pode implementar um endpoint temporário de registro, mas lembre-se de removê-lo ou protegê-lo em ambientes de produção.
 
-### 🔐 **Autenticação**
-- **POST** `/login`  
-  Realiza a autenticação do usuário e retorna um token JWT.
+2. A resposta incluirá um token JWT:
+
+   **Resposta de Exemplo:**
+
+   ```json
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFQSSBGb3J1bSBIdWIiLCJleHAiOjE3MzY3..."
+   }
+   ```
+
+3. Utilize o token nas requisições subsequentes, enviando-o no cabeçalho:
+
+   ```
+   Authorization: Bearer <seu_token>
+   ```
 
 ---
 
-### 📋 **Gerenciamento de Tópicos**
-Base URL: `/topicos`
+## 📄 **Documentação da API**
 
-| Método  | Endpoint         | Descrição                                  |
-|---------|------------------|------------------------------------------|
-| **GET** | `/topicos`        | Lista todos os tópicos.                  |
-| **POST**| `/topicos`        | Cadastra um novo tópico.                 |
-| **GET** | `/topicos/{id}`   | Busca um tópico específico por ID.       |
-| **PUT** | `/topicos/{id}`   | Atualiza as informações de um tópico.    |
-| **DELETE** | `/topicos/{id}`| Exclui um tópico pelo ID.                |
+Acesse a documentação interativa via Swagger UI em:  
+👉 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ---
 
-### ✅ **Detalhes dos Endpoints**
+## 📋 **Endpoints Disponíveis**
 
-#### **1. Cadastrar um Novo Tópico**
+### **Autenticação**
+
+| Método  | Endpoint  | Descrição                                    |
+|---------|-----------|----------------------------------------------|
+| **POST**| `/login`  | Realiza a autenticação e retorna um token JWT.|
+
+### **Gerenciamento de Tópicos**
+
+| Método    | Endpoint          | Descrição                          |
+|-----------|-------------------|-------------------------------------|
+| **GET**   | `/topicos`         | Lista todos os tópicos.            |
+| **POST**  | `/topicos`         | Cadastra um novo tópico.           |
+| **GET**   | `/topicos/{id}`    | Busca um tópico específico por ID. |
+| **PUT**   | `/topicos/{id}`    | Atualiza informações de um tópico. |
+| **DELETE**| `/topicos/{id}`    | Exclui um tópico pelo ID.          |
+
+---
+
+## 📦 **Exemplos de Uso**
+
+### 1️⃣ **Cadastrar um Novo Tópico**
 
 **POST** `/topicos`
 
-Exemplo de Payload da Requisição:
+**Payload de Exemplo:**
 
 ```json
 {
-  "tituloDoComentario": "Como configurar Spring Security",
-  "mensagem": "Estou com uma dúvida sobre Spring Security",
+  "tituloDoComentario": "Dúvida sobre Spring Boot",
+  "mensagem": "Como configurar o Spring Security?",
   "autor": "João Silva",
   "curso": "Spring Boot"
 }
@@ -138,19 +190,17 @@ Exemplo de Payload da Requisição:
 
 ---
 
-#### **2. Buscar Tópico por ID**
+### 2️⃣ **Buscar Tópico por ID**
 
 **GET** `/topicos/{id}`
 
-Esse endpoint permite buscar um tópico específico pelo ID informado.
-
 ---
 
-#### **3. Atualizar um Tópico**
+### 3️⃣ **Atualizar um Tópico**
 
 **PUT** `/topicos/{id}`
 
-Exemplo de Payload da Requisição:
+**Payload de Exemplo:**
 
 ```json
 {
@@ -161,58 +211,33 @@ Exemplo de Payload da Requisição:
 
 ---
 
-#### **4. Excluir um Tópico**
+### 4️⃣ **Excluir um Tópico**
 
 **DELETE** `/topicos/{id}`
 
 ---
 
-## 🧪 **Como Testar a API**
+## 🎯 **Funcionalidades Extras**
 
-Você pode testar os endpoints da API utilizando ferramentas como **Postman**, **Insomnia**, ou diretamente através do **Swagger UI**.
+1. **Tópicos Recentes:**  
+   Endpoint `/topicos/recentes` para listar os 10 tópicos mais recentes.
 
-**Exemplo de Teste via Swagger UI:**
-1. Acesse `http://localhost:8080/swagger-ui/index.html`.
-2. Faça o login no endpoint `/login` e copie o token JWT gerado.
-3. Use o token JWT para autenticar nas demais requisições.
-
----
-
-## 🎯 **Desafios e Funcionalidades Extras**
-
-Durante o desenvolvimento, alguns desafios adicionais foram implementados:
-
-1. **Buscar Tópicos Recentes:**  
-   Endpoint `/topicos/recentes` retorna os 10 tópicos mais recentes.
-
-2. **Buscar Tópicos por Curso e Ano:**  
-   Endpoint `/topicos/buscar?curso=<curso>&ano=<ano>` permite filtrar tópicos por curso e ano específico.
+2. **Filtrar por Curso e Ano:**  
+   Endpoint `/topicos/buscar?curso=<curso>&ano=<ano>` para filtrar tópicos por curso e ano.
 
 ---
 
-## 🛡️ **Regras de Negócio Implementadas**
+## 🔧 **Possíveis Melhorias**
 
-- Todos os tópicos precisam de um ID para serem atualizados, excluídos ou buscados.
-- Apenas usuários autenticados podem acessar a API (exceto o endpoint de login).
-- As senhas dos usuários são armazenadas de forma segura com **BCrypt**.
-- Verificação para evitar o cadastro de tópicos duplicados (mesmo título e mensagem).
-
----
-
-## 🔧 **Possíveis Melhorias Futuras**
-
-- Implementar paginação e ordenação avançada.
-- Adicionar suporte para comentários nos tópicos.
-- Melhorar a interface da documentação com Swagger.
+- Implementar paginação e ordenação.
+- Adicionar suporte a comentários em tópicos.
+- Melhorar a experiência de documentação com Swagger.
 
 ---
 
 ## 📧 **Contato**
 
-- Desenvolvedor: Adaut Lima
-- Email: adautlima@gmail.com
-- LinkedIn: (https://www.linkedin.com/in/adaut-sacchi-d-albuquerque-lima-67a314210/)
+- **Desenvolvedor:** Adaut Lima  
+- **Email:** adautlima@gmail.com  
+- **LinkedIn:** [Adaut Lima](https://www.linkedin.com/in/adaut-sacchi-d-albuquerque-lima-67a314210/)  
 
----
-
-Feito com ❤️ usando **Spring Boot** e **PostgreSQL**.
